@@ -1,0 +1,28 @@
+{
+  "name": "electron-deezer",
+  "version": "0.1.0",
+  "description": "Electron wrapper of deezer.com",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder"
+  },
+  "repository": "https://github.com/marc-gedik/ElectronDeezer.git",
+  "keywords": [
+    "Electron",
+    "Deezer"
+  ],
+  "author": "marc-gedik",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^8.2.0",
+    "electron-builder": "^22.4.1"
+  },
+  "build": {
+    "productName": "ElectronDeezer",
+    "files": [
+      "**/*",
+      "assets/"
+    ]
+  }
+}

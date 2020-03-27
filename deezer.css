@@ -1,0 +1,150 @@
+
+.page-wrapper {
+    width: 100vw !important;
+}
+.container {
+    padding: 10px 10px !important;
+}
+
+/* Sidebar Drawer */
+
+#page_sidebar {
+    position: fixed;
+    background: white;
+    transform: translate(-100%, 0);
+    transition: transform 250ms;
+    z-index: 1;
+}
+#page_sidebar.show {
+    transform: translate(0, 0);
+}
+#page_sidebar.show:before {
+    content: '';
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+}
+#page_sidebar .conversion-banner {
+    display: none;
+}
+main#page_content {
+    margin: 0;
+}
+#page_topbar {
+    left: 0;
+    padding-left: 56px !important;
+    min-width: auto;
+}
+
+/* Mini player */
+
+.player-bottom {
+    flex-direction: column;
+    min-width: auto !important;
+    height: inherit !important;
+}
+.page-player .player-track {
+    padding: 0 !important;
+    width: 100%;
+}
+.naboo {
+    padding-bottom: 141px !important;
+}
+.player-bottom .popper {
+    z-index: 2;
+}
+
+/* Hide ads */ 
+.ads, .page-alerts { 
+    display: none !important;
+}
+
+/* Play queue */
+.player-full {
+    min-width: initial !important;
+}
+.player-container { 
+    margin: 0 15px !important; 
+}
+.queuelist-cover {
+    display: none;
+}
+.queuelist-header {
+    position: fixed;
+    top: 0;
+}
+.queuelist-header > * + div {
+    display: none;
+}
+.queuelist-content {
+    width: 100%;
+}
+
+/* search */
+.search-results .thumbnail-grid img, .channel-section .thumbnail-grid img {
+    width: auto;
+    height: 128px;
+}
+.thumbnail-col {
+    height: auto !important;
+    width: min-content !important;
+}
+.action {
+    transform: scale(.7) translateX(-15%);;
+}
+
+/* mini modal */
+@media (max-width: 500px) {
+    .modal-dialog {
+        min-width: auto !important;
+        max-height: 90vh;
+    }
+    .modal-header, .modal-footer {
+        padding: 5px 30px !important;
+    }
+    .modal-body {
+        max-height: fit-content !important;
+    }
+    .modal-body .wrapper {
+        padding: 0 20px;
+    }
+}
+
+
+
+#collapse {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 12px;
+    height: 12px;
+    z-index: 10000;
+    border-radius: 0 6px 0 0;
+    padding: 6px;
+    box-sizing: content-box;
+    cursor: pointer;
+    color: black;
+}
+
+#collapse:hover {
+    background-color: var(--background-contrast);
+}
+
+#menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 201;
+    width: 16px;
+    height: 16px;
+    box-sizing: content-box;
+    cursor: pointer;
+    padding: 9px;
+    margin: 11px;
+    border-radius: 50%;
+    background-color: white;
+}
+
+#menu:hover {
+    background-color: var(--background-contrast);
+}
