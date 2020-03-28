@@ -148,3 +148,7 @@ main#page_content {
 #menu:hover {
     background-color: var(--background-contrast);
 }
+
+* {
+    -webkit-app-region: no-drag !important;
+}

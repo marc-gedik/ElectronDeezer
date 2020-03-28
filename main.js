@@ -1,12 +1,23 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, Tray, Menu, globalShortcut } = require('electron')
+const { app, BrowserWindow, Tray, Menu, globalShortcut, screen } = require('electron')
 const path = require('path')
 const fs = require('fs')
 
 let mainWindow
 let tray
 
-app.dock.hide()
+const size = {
+  collapsed: {
+    width: 400,
+    height: 142
+  },
+  expanded: {
+    width: 800,
+    height: 600
+  }
+}
+
+app.dock && app.dock.hide()
 
 function quit() {
   mainWindow.destroy()
@@ -22,9 +33,9 @@ function hideWindow() {
 }
 
 function showWindow() {
-  const bounds = tray.getBounds()
-  mainWindow.setSize(400, 142)
-  mainWindow.setPosition(bounds.x - 200, bounds.y + bounds.height + 4)
+  mainWindow.setBounds(size.collapsed)
+  const {x, y} = windowPosition()
+  mainWindow.setPosition(x, y)
   mainWindow.setVisibleOnAllWorkspaces(true)
   mainWindow.show()
   mainWindow.setVisibleOnAllWorkspaces(false)
@@ -75,13 +86,14 @@ function createTray() {
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: size.expanded.width,
+    height: size.expanded.height,
     show: false,
     frame: false,
     fullscreenable: false,
     resizable: false,
     transparent: true,
+    skipTaskbar: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       webviewTag: true
@@ -95,21 +107,37 @@ function createWindow() {
     mainWindow.webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'deezer.css'), 'utf8'))
   })
 
-  mainWindow.on("close", evt => {
-    evt.preventDefault()
-    mainWindow.hide()
-  })
-
-  mainWindow.on('blur', mainWindow.hide)
-
   // Open the DevTools.
-   mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
 
   return mainWindow
 }
 
+function setWindowAutoHide() {
+  mainWindow.on('blur', hideWindow)
+  mainWindow.on("close", function(event) {
+    event.preventDefault()
+    hideWindow()
+  })
+}
+
+function windowPosition() {
+  const screenBounds = screen.getPrimaryDisplay().size
+  const trayBounds = tray.getBounds()
+
+  const x = trayBounds.x - size.collapsed.width / 2
+  const y = trayBounds.y > screenBounds.height / 2 ? 
+    trayBounds.y - size.collapsed.height:
+    trayBounds.y + trayBounds.height / 2
+    
+
+  return { x, y }
+}
+
+
 app.on('ready', () => {
   createWindow()
+  setWindowAutoHide()
   filterRequest(mainWindow)
   registerMediakeys(mainWindow)
   createTray()
