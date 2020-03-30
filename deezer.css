@@ -110,6 +110,17 @@ main#page_content {
     }
 }
 
+/* profile popup */
+.topbar-profile + .popper {
+    transform: translate3d(-252px, 32px, 0px) !important;
+}
+.popper-account {
+    max-height: 400px;
+    overflow: auto;
+}
+.popper-account + .popper-arrow {
+    left: 262px !important;
+}
 
 
 #collapse {
