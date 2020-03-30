@@ -10,7 +10,7 @@
 
 #page_sidebar {
     position: fixed;
-    background: white;
+    background: var(--background-intermediate);
     transform: translate(-100%, 0);
     transition: transform 250ms;
     z-index: 1;
@@ -134,7 +134,7 @@ main#page_content {
     padding: 6px;
     box-sizing: content-box;
     cursor: pointer;
-    color: black;
+    color: var(--text-primary);
 }
 
 #collapse:hover {
@@ -153,7 +153,8 @@ main#page_content {
     padding: 9px;
     margin: 11px;
     border-radius: 50%;
-    background-color: white;
+    background-color: var(--background-contrast);
+    color: var(--text-secondary);
 }
 
 #menu:hover {
