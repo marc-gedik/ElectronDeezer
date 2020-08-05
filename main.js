@@ -134,6 +134,18 @@ function windowPosition() {
   return { x, y }
 }
 
+function fixLinuxTray(tray) {
+  const screen = require('electron').screen
+
+  // https://github.com/electron/electron/issues/15003
+  Tray.prototype.getBounds = function() {
+    const { x, y } = screen.getCursorScreenPoint()
+    return { width: 0, height: 0, x, y }
+  }
+
+  // https://github.com/electron/electron/issues/14941
+  tray.setContextMenu(contextMenu)
+}
 
 app.on('ready', () => {
   createWindow()
@@ -141,4 +153,7 @@ app.on('ready', () => {
   filterRequest(mainWindow)
   registerMediakeys(mainWindow)
   createTray()
+  if(process.platform == 'linux') {
+    fixLinuxTray(tray)
+  }
 })
