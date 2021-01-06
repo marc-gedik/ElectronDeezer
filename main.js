@@ -6,6 +6,7 @@ const fs = require('fs')
 let mainWindow
 let tray
 
+const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'
 const size = {
   collapsed: {
     width: 400,
@@ -34,7 +35,7 @@ function hideWindow() {
 
 function showWindow() {
   mainWindow.setBounds(size.collapsed)
-  const {x, y} = windowPosition()
+  const { x, y } = windowPosition()
   mainWindow.setPosition(x, y)
   mainWindow.setVisibleOnAllWorkspaces(true)
   mainWindow.show()
@@ -100,9 +101,14 @@ function createWindow() {
     }
   })
 
-  mainWindow.webContents.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36")
+  mainWindow.webContents.session.webRequest.onBeforeSendHeaders((details, callback) => {
+    details.requestHeaders['User-Agent'] = userAgent
+    callback({ cancel: false, requestHeaders: details.requestHeaders })
+  });
+
+  mainWindow.webContents.setUserAgent(userAgent)
   mainWindow.loadURL("https://www.deezer.com")
-  
+
   mainWindow.webContents.on('did-finish-load', function () {
     mainWindow.webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'deezer.css'), 'utf8'))
   })
@@ -115,7 +121,7 @@ function createWindow() {
 
 function setWindowAutoHide() {
   mainWindow.on('blur', hideWindow)
-  mainWindow.on("close", function(event) {
+  mainWindow.on("close", function (event) {
     event.preventDefault()
     hideWindow()
   })
@@ -126,10 +132,9 @@ function windowPosition() {
   const trayBounds = tray.getBounds()
 
   const x = trayBounds.x - size.collapsed.width / 2
-  const y = trayBounds.y > screenBounds.height / 2 ? 
-    trayBounds.y - size.collapsed.height:
+  const y = trayBounds.y > screenBounds.height / 2 ?
+    trayBounds.y - size.collapsed.height :
     trayBounds.y + trayBounds.height / 2
-    
 
   return { x, y }
 }
@@ -138,7 +143,7 @@ function fixLinuxTray(tray) {
   const screen = require('electron').screen
 
   // https://github.com/electron/electron/issues/15003
-  Tray.prototype.getBounds = function() {
+  Tray.prototype.getBounds = function () {
     const { x, y } = screen.getCursorScreenPoint()
     return { width: 0, height: 0, x, y }
   }
@@ -153,7 +158,7 @@ app.on('ready', () => {
   filterRequest(mainWindow)
   registerMediakeys(mainWindow)
   createTray()
-  if(process.platform == 'linux') {
+  if (process.platform == 'linux') {
     fixLinuxTray(tray)
   }
 })
