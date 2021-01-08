@@ -6,6 +6,7 @@ const fs = require('fs')
 let mainWindow
 let tray
 
+const isLinux = process.platform == 'linux'
 const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'
 const size = {
   collapsed: {
@@ -129,7 +130,7 @@ function setWindowAutoHide() {
 
 function windowPosition() {
   const screenBounds = screen.getPrimaryDisplay().size
-  const trayBounds = tray.getBounds()
+  const trayBounds = getTrayBounds(tray)
 
   const x = trayBounds.x - size.collapsed.width / 2
   const y = trayBounds.y > screenBounds.height / 2 ?
@@ -139,15 +140,17 @@ function windowPosition() {
   return { x, y }
 }
 
-function fixLinuxTray(tray) {
-  const screen = require('electron').screen
-
-  // https://github.com/electron/electron/issues/15003
-  Tray.prototype.getBounds = function () {
+function getTrayBounds(tray) {
+  if(isLinux) {
+    // https://github.com/electron/electron/issues/15003
     const { x, y } = screen.getCursorScreenPoint()
     return { width: 0, height: 0, x, y }
+  } else {
+    return tray.getBounds()
   }
+}
 
+function fixLinuxTray(tray) {
   // https://github.com/electron/electron/issues/14941
   tray.setContextMenu(contextMenu)
 }
@@ -158,7 +161,7 @@ app.on('ready', () => {
   filterRequest(mainWindow)
   registerMediakeys(mainWindow)
   createTray()
-  if (process.platform == 'linux') {
+  if (isLinux) {
     fixLinuxTray(tray)
   }
 })
