@@ -1,9 +1,14 @@
 
+main#page_content {
+    margin: 0;
+}
+
 .page-wrapper {
     width: 100vw !important;
 }
 .container {
-    padding: 10px 10px !important;
+    width: 100% !important;
+    padding: 10px !important;
 }
 
 /* Sidebar Drawer */
@@ -27,9 +32,7 @@
 #page_sidebar .conversion-banner {
     display: none;
 }
-main#page_content {
-    margin: 0;
-}
+
 #page_topbar {
     left: 0;
     padding-left: 56px !important;
@@ -80,17 +83,27 @@ main#page_content {
     width: 100%;
 }
 
-/* search */
-.search-results .thumbnail-grid img, .channel-section .thumbnail-grid img {
-    width: auto;
-    height: 128px;
-}
+/* Small images */
+
 .thumbnail-col {
-    height: auto !important;
-    width: min-content !important;
+    width: 100px !important;
 }
+
+.thumbnail-col .picture-img {
+    height: 100px !important;
+}
+
+.thumbnail-col-slide.thumbnail-col {
+    width: 280px !important;
+    height: 135px !important;
+}
+
+.thumbnail-rounded {
+    width: 100px !important;
+}
+
 .action {
-    transform: scale(.7) translateX(-15%);;
+    transform: scale(.7) translateX(-30%);;
 }
 
 /* mini modal */
@@ -120,6 +133,10 @@ main#page_content {
 }
 .popper-account + .popper-arrow {
     left: 262px !important;
+}
+
+.popper-body {
+    max-height: 55vh;
 }
 
 
