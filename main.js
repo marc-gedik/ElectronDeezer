@@ -2,22 +2,13 @@
 const { app, BrowserWindow, Tray, Menu, globalShortcut, screen } = require('electron')
 const path = require('path')
 const fs = require('fs')
+const { size } = require("./shared")
 
 let mainWindow
 let tray
 
 const isLinux = process.platform == 'linux'
 const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'
-const size = {
-  collapsed: {
-    width: 400,
-    height: 142
-  },
-  expanded: {
-    width: 800,
-    height: 600
-  }
-}
 
 app.dock && app.dock.hide()
 
@@ -97,8 +88,7 @@ function createWindow() {
     transparent: true,
     skipTaskbar: true,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-      webviewTag: true
+      preload: path.join(__dirname, 'preload.js')
     }
   })
 
