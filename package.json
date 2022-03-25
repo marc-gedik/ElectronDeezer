@@ -15,7 +15,7 @@
   "author": "marc-gedik",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^13.1.0",
+    "electron": "^13.6.6",
     "electron-builder": "^22.10.5"
   },
   "build": {
