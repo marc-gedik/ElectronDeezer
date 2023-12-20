@@ -1,0 +1,24 @@
+.player-full {
+    min-width: initial !important;
+}
+.player-container { 
+    margin: 0px 0px 0px 10px !important; 
+}
+.queuelist-cover {
+    display: none;
+}
+.queuelist-header {
+    width: calc(100% - 94px);
+    position: fixed;
+    top: 0;
+}
+.queuelist-header > * + div {
+    display: none;
+}
+.queuelist-content {
+    width: 100%;
+}
+.queuelist-tracklist-inner {
+    margin: 0 !important;
+}
+.Ledev > div > div { height: calc(100vh - 136px) !important; }

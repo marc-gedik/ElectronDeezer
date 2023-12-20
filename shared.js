@@ -1,7 +1,7 @@
 const size = {
     collapsed: {
       width: 400,
-      height: 142
+      height: 112
     },
     expanded: {
       width: 800,

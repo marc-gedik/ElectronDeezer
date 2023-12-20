@@ -1,0 +1,36 @@
+
+#page_topbar {
+    height: 56px;
+}
+.naboo {
+    padding-top: 56px !important;
+}
+
+/* Hide ads */ 
+.ads, .page-alerts { 
+    display: none !important;
+}
+
+* {
+    -webkit-app-region: no-drag !important;
+}
+*::-webkit-scrollbar {
+    display: none;
+  }
+  * {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+.footer {
+    display: none !important;
+}
+
+.chakra-portal {
+    display: none;
+}
+
+html body {
+    background-attachment: scroll !important;
+    overflow-y: scroll !important;
+}

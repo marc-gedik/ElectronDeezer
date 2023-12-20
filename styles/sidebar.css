@@ -1,0 +1,55 @@
+
+main#page_content {
+    margin: 0;
+}
+.container {
+    width: 100% !important;
+    padding: 10px !important;
+}
+
+#page_topbar {
+    left: 0;
+    padding-left: 56px !important;
+    min-width: auto;
+}
+
+.css-efpag6 {
+    z-index: 200 !important;
+    background: var(--background-intermediate);
+    transform: translate(-100%, 0);
+    transition: transform 250ms;
+    overscroll-behavior: contain;
+}
+.css-efpag6.show {
+    transform: translate(0, 0);
+}
+.css-efpag6.show:before {
+    content: '';
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+}
+.css-1ldm6uz { /* Hide infos */
+    display: none;
+}
+
+/* Added menu icon */
+#menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 201;
+    width: 16px;
+    height: 16px;
+    box-sizing: content-box;
+    cursor: pointer;
+    padding: 9px;
+    margin: 11px;
+    border-radius: 50%;
+    background-color: var(--background-contrast);
+    color: var(--text-secondary);
+}
+
+#menu:hover {
+    background-color: var(--background-contrast);
+}

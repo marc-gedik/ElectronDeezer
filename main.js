@@ -29,9 +29,7 @@ function showWindow() {
   mainWindow.setBounds(size.collapsed)
   const { x, y } = windowPosition()
   mainWindow.setPosition(x, y)
-  mainWindow.setVisibleOnAllWorkspaces(true)
   mainWindow.show()
-  mainWindow.setVisibleOnAllWorkspaces(false)
 }
 
 const contextMenu = Menu.buildFromTemplate([
@@ -88,9 +86,11 @@ function createWindow() {
     transparent: true,
     skipTaskbar: true,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true,
     }
   })
+  mainWindow.setVisibleOnAllWorkspaces(true, { skipTransformProcessType: true });
 
   mainWindow.webContents.session.webRequest.onBeforeSendHeaders((details, callback) => {
     details.requestHeaders['User-Agent'] = userAgent
@@ -98,10 +98,13 @@ function createWindow() {
   });
 
   mainWindow.webContents.setUserAgent(userAgent)
-  mainWindow.loadURL("https://www.deezer.com")
+  mainWindow.loadURL("https://www.deezer.com/login")
 
   mainWindow.webContents.on('did-finish-load', function () {
-    mainWindow.webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'deezer.css'), 'utf8'))
+    mainWindow.webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'styles/deezer.css'), 'utf8'))
+    mainWindow.webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'styles/sidebar.css'), 'utf8'))
+    mainWindow.webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'styles/playqueue.css'), 'utf8'))
+    mainWindow.webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'styles/miniplayer.css'), 'utf8'))
   })
 
   // Open the DevTools.
@@ -111,7 +114,7 @@ function createWindow() {
 }
 
 function setWindowAutoHide() {
-  mainWindow.on('blur', hideWindow)
+  mainWindow.on('blur', hideWindow);
   mainWindow.on("close", function (event) {
     event.preventDefault()
     hideWindow()
