@@ -26,8 +26,8 @@
     display: none !important;
 }
 
-.chakra-portal {
-    display: none;
+.chakra-portal:has(a[data-testid="conversionBoxCTA"]) {
+     display: none;
 }
 
 html body {
